@@ -1,0 +1,52 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de manipulação de produtos",
+        "description": "Essa API tem como objetivo a manipulação dos produtos",
+        "termsOfService": "https://www.google.com",
+        "contact": {
+            "email": "inDevelopement..."
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://www.gooogle.com/v1",
+            "description": "API de test"
+        },
+        {
+            "url": "https://www.gooogle.com/v2",
+            "description": "API de produção"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Get all users.",
+                "description": "Essa rota é apenas teste da minha documentação.",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Users": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
