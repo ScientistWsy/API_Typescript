@@ -20,11 +20,11 @@
         }
     ],
     "paths": {
-        "/users": {
+        "/livros": {
             "get": {
                 "summary": "Get all users.",
                 "description": "Essa rota é apenas teste da minha documentação.",
-                "tags": ["Users"],
+                "tags": ["Livros"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -39,7 +39,7 @@
     },
     "components": {
         "schemas": {
-            "Users": {
+            "Livros": {
                 "type": "object",
                 "properties": {
                     "name": {

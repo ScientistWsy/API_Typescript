@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes';
+import livroRoutes from './routes/livroRoutes';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from './swagger.json'; 
@@ -11,10 +11,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api', userRoutes);
+app.use('/api', livroRoutes);
 
-export default app;
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+export default app;
 
