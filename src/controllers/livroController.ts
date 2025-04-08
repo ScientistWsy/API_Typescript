@@ -200,7 +200,7 @@ export const updateLivro = async (req: Request, res: Response) => {
   }
 };
 
-//Atualizar Editora
+// Atualizar Editora
 export const updateEditora = async (req: Request, res: Response) => {
   const editora: Editora = req.body;
 

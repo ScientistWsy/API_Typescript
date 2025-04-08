@@ -11,25 +11,82 @@
     },
     "servers": [
         {
-            "url": "https://www.gooogle.com/v1",
-            "description": "API de test"
+            "url": "http://localhost:3000/api",
+            "description": "API de Homolog"
         },
         {
-            "url": "https://www.gooogle.com/v2",
-            "description": "API de produção"
+            "url": "https://www.google.com/v2",
+            "description": "APi Produção"
         }
     ],
     "paths": {
         "/livros": {
             "get": {
                 "summary": "Retorna todos os livros.",
-                "description": "Essa rota é apenas teste da minha documentação.",
-                "tags": ["Livros"],
+                "description": "Busca todos os livros cadastrados do banco de dados.",
+                "tags": [
+                    "Livros"
+                ]
+            }
+        },
+        "/livro/new": {
+            "post": {
+                "summary": "Adiciona um novo livro",
+                "description": "Cria um novo registro de um livro.",
+                "tags": [
+                    "Livros"
+                ],
+                "parameters": [
+                    {
+                        "name": "titulo",
+                        "in": "query",
+                        "description": "Titulo do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-
+                                "$ref": "#components/schemas/Livro"
+                            },
+                            "examples": {
+                                "livroExemplo": {
+                                    "value": {
+                                        "id": 0,
+                                        "Titulo": "O Homem que Calculava",
+                                        "Autor": "Malba Ta",
+                                        "ISBN": 123456789,
+                                        "AnoDePublicacao": 1998,
+                                        "Editora": {
+                                            "id": 1,
+                                            "Nome": "Abril",
+                                            "Cidade": "São Paulo"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Campos obrigarórios inválidos."
+                    },
+                    "500": {
+                        "description": "Erro ao criar o livro."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#components/schemas/Livro"
+                                }
                             }
                         }
                     }
@@ -39,11 +96,37 @@
     },
     "components": {
         "schemas": {
-            "Livros": {
+            "Livro": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Titulo": {
                         "type": "string"
+                    },
+                    "Autor": {
+                        "type": "string"
+                    },
+                    "ISBN": {
+                        "type": "number"
+                    },
+                    "AnoDePublicacao": {
+                        "type": "number"
+                    },
+                    "Editora": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "Nome": {
+                                "type": "string"
+                            },
+                            "Cidade": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }

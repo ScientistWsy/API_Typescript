@@ -18,7 +18,7 @@ router.put('/livro/update', updateLivro);
 router.put('/editora/update', updateEditora);
 
 // DELETE 
-router.delete('livro/remove', deleteLivro);
-router.delete('editora/remove', deleteEditora);
+router.delete('/livro/remove', deleteLivro);
+router.delete('/editora/remove', deleteEditora);
 
 export default router;
