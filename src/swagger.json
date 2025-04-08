@@ -22,7 +22,7 @@
     "paths": {
         "/livros": {
             "get": {
-                "summary": "Get all users.",
+                "summary": "Retorna todos os livros.",
                 "description": "Essa rota é apenas teste da minha documentação.",
                 "tags": ["Livros"],
                 "requestBody": {

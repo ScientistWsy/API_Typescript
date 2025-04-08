@@ -13,7 +13,6 @@ app.use(express.json());
 
 app.use('/api', livroRoutes);
 
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 export default app;
