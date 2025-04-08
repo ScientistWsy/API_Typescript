@@ -3,21 +3,21 @@ import { getAllLivros, getLivro, createLivro, createEditora, getAllEditoras, get
 
 const router = Router();
 
-//GET
+// GET
 router.get('/livro/:id', getLivro);
 router.get('/livros', getAllLivros);
 router.get('/Editora/:id', getEditora);
 router.get('/Editoras', getAllEditoras);
 
-//POST 
+// POST 
 router.post('/livro/new', createLivro);
 router.post('/editora/new', createEditora);
 
-//PUT 
+// PUT 
 router.put('/livro/update', updateLivro);
 router.put('/editora/update', updateEditora);
 
-//DELETE 
+// DELETE 
 router.delete('livro/remove', deleteLivro);
 router.delete('editora/remove', deleteEditora);
 
