@@ -114,7 +114,6 @@ export const createLivro = async (req: Request, res: Response) => {
     !livro.Autor ||
     !livro.ISBN ||
     !livro.AnoDePublicacao ||
-    !livro.Editora ||
     !livro.Editora.Id
   ) {
     res.status(400).json({ message: 'Campos obrigatórios ausentes ou inválidos' });
@@ -123,7 +122,7 @@ export const createLivro = async (req: Request, res: Response) => {
 
   try {
     await db.none(`
-      INSERT INTO Livro (Titulo, Autor, ISBN, AnoDePublicacao, EditoraId)
+      INSERT INTO Livro (Titulo, Autor, ISBN, AnoDePublicacao, Editora)
       VALUES ($1, $2, $3, $4, $5)
       `, [livro.Titulo, livro.Autor, livro.ISBN, livro.AnoDePublicacao, livro.Editora.Id]);
 
