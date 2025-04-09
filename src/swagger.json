@@ -1,11 +1,11 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API de manipulação de produtos",
-        "description": "Essa API tem como objetivo a manipulação dos produtos",
-        "termsOfService": "https://www.google.com",
+        "title": "API Biblioteca",
+        "description": "API para manipulação e gestão de de livros",
+        "termsOfService": "https://github.com/ScientistWsy",
         "contact": {
-            "email": "inDevelopement..."
+            "email": "silveira_wsy@hotmail.com"
         },
         "version": "1.0.0"
     },
@@ -15,43 +15,80 @@
             "description": "API de Homolog"
         },
         {
-            "url": "https://www.google.com/v2",
+            "url": "http://localhost:3000/api-prod/",
             "description": "APi Produção"
         }
     ],
     "paths": {
-        "/livro": {
+        "/livro/{id}": {
             "get": {
                 "summary": "Retorna um livro específico.",
                 "description": "Busca um livro específico no banco de dados.",
-                "tags": ["Livros"]
-            },
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "query",
-                    "description": "Identificador do livro",
-                    "required": true,
-                    "schema": {
-                        "type": "number"
+                "tags": ["Livro"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Livro encontrado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Livro"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ID inválido."
+                    },
+                    "404": {
+                        "description": "Editora não encontrada."
+                    },
+                    "500": {
+                        "description": "Erro ao buscar a editora."
                     }
                 }
-            ]
+            }
         },
         "/livros": {
             "get": {
                 "summary": "Retorna todos os livros.",
                 "description": "Busca todos os livros cadastrados do banco de dados.",
-                "tags": ["Livros"]
+                "tags": ["Livro"],
+                "responses": {
+                    "500": {
+                        "description": "Erro ao buscar livro."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Livro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/livro/new": {
             "post": {
                 "summary": "Adiciona um novo livro.",
                 "description": "Cria um novo registro de um livro.",
-                "tags": [
-                    "Livros"
-                ],
+                "tags": ["Livro"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -95,27 +132,28 @@
                 }
             }
         },
-        "/livro/update": {
+        "/livro/update/{id}": {
             "put": {
                 "summary": "Atualiza dados do livro.",
                 "description": "Atualiza as informações de um livro cadastrado.",
-                "tags": ["Livros"],
+                "tags": ["Livro"],
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Identificador do livro",
                         "required": true,
                         "schema": {
-                            "type": "number"
+                            "type": "integer"
                         }
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#components/schemas/Livro"
+                                "$ref": "#/components/schemas/Livro"
                             },
                             "examples": {
                                 "livroExemplo": {
@@ -125,8 +163,118 @@
                                         "ISBN": 987654321,
                                         "AnoDePublicacao": 2000,
                                         "Editora": {
-                                            "Id": 1
+                                            "Id": 2
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Livro atualizado com sucesso."
+                    },
+                    "400": {
+                        "description": "Requisição inválida."
+                    },
+                    "404": {
+                        "description": "Livro não encontrado."
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor."
+                    }
+                }
+            }
+        },
+        "/livro/remove/{id}": {
+            "delete": {
+                "summary": "Apaga o cadastro de um livro.",
+                "description": "Remove um livro cadastrado no banco de dados.",
+                "tags": ["Livro"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Livro removido com sucesso."
+                    },
+                    "400": {
+                        "description": "ID inválido."
+                    },
+                    "404": {
+                        "description": "Livro não encontrado."
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor."
+                    }
+                }
+            }
+        },
+        "/editora/{id}": {
+            "get": {
+                "summary": "Retorna uma editora específica.",
+                "description": "Busca uma editora específica no banco de dados.",
+                "tags": ["Editora"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da editora",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Editora encontrada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Editora"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ID inválido."
+                    },
+                    "404": {
+                        "description": "Editora não encontrada."
+                    },
+                    "500": {
+                        "description": "Erro ao buscar a editora."
+                    }
+                }
+            }
+        },
+        "/editoras": {
+            "get": {
+                "summary": "Retorna todas as editoras.",
+                "description": "Busca por todas as editoras cadastradas no banco de dados.",
+                "tags": ["Editora"],
+                "responses": {
+                    "500": {
+                        "description": "Erro ao buscar as editoras."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Editora"
                                     }
                                 }
                             }
@@ -135,56 +283,11 @@
                 }
             }
         },
-        "/livro/remove": {
-            "delete": {
-                "summary": "Apaga o cadastro de um livro.",
-                "description": "Remove um livro cadastrado no banco de dados.",
-                "tags": ["Livros"]
-            },
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "query",
-                    "description": "Identificador do livro",
-                    "required": true,
-                    "schema": {
-                        "type": "number"
-                    }
-                }
-            ]
-        },
-        "/editora": {
-            "get": {
-                "summary": "Retorna uma editora específica.",
-                "description": "Busca uma editora específica no banco de dados.",
-                "tags": ["Editora"]
-            },
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "query",
-                    "description": "Identificador da editora",
-                    "required": true,
-                    "schema": {
-                        "type": "number"
-                    }
-                }
-            ]
-        },
-        "/editoras": {
-            "get": {
-                "summary": "Retorna todas as editoras.",
-                "description": "Busca por todas as editoras cadastradas no banco de dados.",
-                "tags": ["Editora"]
-            }
-        },
         "/editora/new": {
             "post": {
                 "summary": "Adiciona uma nova editora.",
                 "description": "Cria um novo registro de uma editora.",
-                "tags": [
-                    "Editora"
-                ],
+                "tags": ["Editora"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -223,23 +326,24 @@
                 }
             }
         },
-        "/editora/update": {
+        "/editora/update/{id}": {
             "put": {
-                "summary": "Atualiza dados de uma editora.",
+                "summary": "Atualiza dados da editora.",
                 "description": "Atualiza as informações de uma editora cadastrada.",
                 "tags": ["Editora"],
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Identificador da editora",
                         "required": true,
                         "schema": {
-                            "type": "number"
+                            "type": "integer"
                         }
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -248,33 +352,61 @@
                             "examples": {
                                 "editoraExemplo": {
                                     "value": {
-                                        "Nome": "Abril",
-                                        "Cidade": "São Paulo"
+                                        "Nome": "Globo",
+                                        "Cidade": "Rio de Janeiro"
                                     }
                                 }
                             }
                         }
                     }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Editora atualizada com sucesso."
+                    },
+                    "400": {
+                        "description": "Requisição inválida."
+                    },
+                    "404": {
+                        "description": "Editora não encontrada."
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor."
+                    }
                 }
             }
         },
-        "/editora/remove": {
+        "/editora/remove/{id}": {
             "delete": {
                 "summary": "Apaga o cadastro de uma editora.",
                 "description": "Remove uma editora cadastrada no banco de dados.",
-                "tags": ["Editora"]
-            },
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "query",
-                    "description": "Identificador da editora",
-                    "required": true,
-                    "schema": {
-                        "type": "number"
+                "tags": ["Editora"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da editora",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Editora removida com sucesso."
+                    },
+                    "400": {
+                        "description": "ID inválido."
+                    },
+                    "404": {
+                        "description": "Editora não encontrada."
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor."
                     }
                 }
-            ]
+            }
         }
     },
     "components": {

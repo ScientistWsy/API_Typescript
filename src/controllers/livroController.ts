@@ -19,7 +19,7 @@ export const getAllLivros = async (req: Request, res: Response) => {
           'Cidade', e.Cidade
         ) AS "Editora"
       FROM Livro l
-      JOIN Editora e ON l.EditoraId = e.Id
+      JOIN Editora e ON l.Editora = e.Id
     `);
     res.status(200).json(livros);
   } catch (error) {
@@ -50,7 +50,7 @@ export const getLivro = async (req: Request, res: Response) => {
           'Cidade', e.Cidade
         ) AS "Editora"
       FROM Livro l
-      JOIN Editora e ON l.EditoraId = e.Id
+      JOIN Editora e ON l.Editora = e.Id
       WHERE l.Id = $1
     `, [id]);
 
@@ -164,7 +164,7 @@ export const updateLivro = async (req: Request, res: Response) => {
     !livro.Autor ||
     !livro.ISBN ||
     !livro.AnoDePublicacao ||
-    !livro.Editora?.Id
+    !livro.Editora.Id
   ) {
     res.status(400).json({ message: 'Campos obrigatórios ausentes ou inválidos' });
     return;
@@ -177,7 +177,7 @@ export const updateLivro = async (req: Request, res: Response) => {
           Autor = $2,
           ISBN = $3,
           AnoDePublicacao = $4,
-          EditoraId = $5
+          Editora = $5
       WHERE Id = $6
     `, [
       livro.Titulo,
@@ -216,8 +216,8 @@ export const updateEditora = async (req: Request, res: Response) => {
 
   try {
     const result = await db.result(`
-      UPDATE Editora SET Nome = $1, Cidade = $2 WHERE Id = $3
-    `, [id]);
+      UPDATE Editora SET Nome = $1, Cidade = $2 WHERE id = $3
+    `, [editora.Cidade, editora.Cidade, id]);
 
     if (result.rowCount === 0) {
       res.status(404).json({ message: 'Editora não encontrada' });
@@ -226,7 +226,6 @@ export const updateEditora = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Editora atualizada com sucesso' });
   } catch (error) {
-    console.error('Erro ao atualizar editora:', error);
     res.status(500).json({ message: 'Erro ao atualizar editora', error });
   }
 };
