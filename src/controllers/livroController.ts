@@ -154,11 +154,12 @@ export const createEditora = async (req: Request, res: Response) => {
 
 // Atualizar Livro
 export const updateLivro = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
   const livro: Livro = req.body;
 
   // Validação básica
   if (
-    !livro.Id ||
+    !id ||
     !livro.Titulo ||
     !livro.Autor ||
     !livro.ISBN ||
@@ -184,7 +185,7 @@ export const updateLivro = async (req: Request, res: Response) => {
       livro.ISBN,
       livro.AnoDePublicacao,
       livro.Editora.Id,
-      livro.Id
+      id
     ]);
 
     if (result.rowCount === 0) {
@@ -201,10 +202,11 @@ export const updateLivro = async (req: Request, res: Response) => {
 
 // Atualizar Editora
 export const updateEditora = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
   const editora: Editora = req.body;
 
   if (
-    !editora.Id ||
+    !id ||
     !editora.Nome ||
     !editora.Cidade
   ) {
@@ -215,7 +217,7 @@ export const updateEditora = async (req: Request, res: Response) => {
   try {
     const result = await db.result(`
       UPDATE Editora SET Nome = $1, Cidade = $2 WHERE Id = $3
-    `, [editora.Id]);
+    `, [id]);
 
     if (result.rowCount === 0) {
       res.status(404).json({ message: 'Editora não encontrada' });

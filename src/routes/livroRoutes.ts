@@ -6,19 +6,19 @@ const router = Router();
 // GET
 router.get('/livro/:id', getLivro);
 router.get('/livros', getAllLivros);
-router.get('/Editora/:id', getEditora);
-router.get('/Editoras', getAllEditoras);
+router.get('/editora/:id', getEditora);
+router.get('/editoras', getAllEditoras);
 
 // POST 
 router.post('/livro/new', createLivro);
 router.post('/editora/new', createEditora);
 
 // PUT 
-router.put('/livro/update', updateLivro);
-router.put('/editora/update', updateEditora);
+router.put('/livro/update/:id', updateLivro);
+router.put('/editora/update/:id', updateEditora);
 
 // DELETE 
-router.delete('/livro/remove', deleteLivro);
-router.delete('/editora/remove', deleteEditora);
+router.delete('/livro/remove/:id', deleteLivro);
+router.delete('/editora/remove/:id', deleteEditora);
 
 export default router;

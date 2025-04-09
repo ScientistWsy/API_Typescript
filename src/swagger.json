@@ -20,32 +20,37 @@
         }
     ],
     "paths": {
+        "/livro": {
+            "get": {
+                "summary": "Retorna um livro específico.",
+                "description": "Busca um livro específico no banco de dados.",
+                "tags": ["Livros"]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "query",
+                    "description": "Identificador do livro",
+                    "required": true,
+                    "schema": {
+                        "type": "number"
+                    }
+                }
+            ]
+        },
         "/livros": {
             "get": {
                 "summary": "Retorna todos os livros.",
                 "description": "Busca todos os livros cadastrados do banco de dados.",
-                "tags": [
-                    "Livros"
-                ]
+                "tags": ["Livros"]
             }
         },
         "/livro/new": {
             "post": {
-                "summary": "Adiciona um novo livro",
+                "summary": "Adiciona um novo livro.",
                 "description": "Cria um novo registro de um livro.",
                 "tags": [
                     "Livros"
-                ],
-                "parameters": [
-                    {
-                        "name": "titulo",
-                        "in": "query",
-                        "description": "Titulo do livro",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
                 ],
                 "requestBody": {
                     "content": {
@@ -56,15 +61,12 @@
                             "examples": {
                                 "livroExemplo": {
                                     "value": {
-                                        "id": 0,
                                         "Titulo": "O Homem que Calculava",
                                         "Autor": "Malba Ta",
                                         "ISBN": 123456789,
                                         "AnoDePublicacao": 1998,
                                         "Editora": {
-                                            "id": 1,
-                                            "Nome": "Abril",
-                                            "Cidade": "São Paulo"
+                                            "Id": 1
                                         }
                                     }
                                 }
@@ -92,6 +94,187 @@
                     }
                 }
             }
+        },
+        "/livro/update": {
+            "put": {
+                "summary": "Atualiza dados do livro.",
+                "description": "Atualiza as informações de um livro cadastrado.",
+                "tags": ["Livros"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Identificador do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Livro"
+                            },
+                            "examples": {
+                                "livroExemplo": {
+                                    "value": {
+                                        "Titulo": "O Homem que Calculava",
+                                        "Autor": "Malba Taham",
+                                        "ISBN": 987654321,
+                                        "AnoDePublicacao": 2000,
+                                        "Editora": {
+                                            "Id": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/livro/remove": {
+            "delete": {
+                "summary": "Apaga o cadastro de um livro.",
+                "description": "Remove um livro cadastrado no banco de dados.",
+                "tags": ["Livros"]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "query",
+                    "description": "Identificador do livro",
+                    "required": true,
+                    "schema": {
+                        "type": "number"
+                    }
+                }
+            ]
+        },
+        "/editora": {
+            "get": {
+                "summary": "Retorna uma editora específica.",
+                "description": "Busca uma editora específica no banco de dados.",
+                "tags": ["Editora"]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "query",
+                    "description": "Identificador da editora",
+                    "required": true,
+                    "schema": {
+                        "type": "number"
+                    }
+                }
+            ]
+        },
+        "/editoras": {
+            "get": {
+                "summary": "Retorna todas as editoras.",
+                "description": "Busca por todas as editoras cadastradas no banco de dados.",
+                "tags": ["Editora"]
+            }
+        },
+        "/editora/new": {
+            "post": {
+                "summary": "Adiciona uma nova editora.",
+                "description": "Cria um novo registro de uma editora.",
+                "tags": [
+                    "Editora"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Editora"
+                            },
+                            "examples": {
+                                "editoraExemplo": {
+                                    "value": {
+                                        "Nome": "Abril",
+                                        "Cidade": "São Paulo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Campos obrigarórios inválidos."
+                    },
+                    "500": {
+                        "description": "Erro ao criar uma editora."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Editora"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/editora/update": {
+            "put": {
+                "summary": "Atualiza dados de uma editora.",
+                "description": "Atualiza as informações de uma editora cadastrada.",
+                "tags": ["Editora"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Identificador da editora",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Editora"
+                            },
+                            "examples": {
+                                "editoraExemplo": {
+                                    "value": {
+                                        "Nome": "Abril",
+                                        "Cidade": "São Paulo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/editora/remove": {
+            "delete": {
+                "summary": "Apaga o cadastro de uma editora.",
+                "description": "Remove uma editora cadastrada no banco de dados.",
+                "tags": ["Editora"]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "query",
+                    "description": "Identificador da editora",
+                    "required": true,
+                    "schema": {
+                        "type": "number"
+                    }
+                }
+            ]
         }
     },
     "components": {
@@ -115,18 +298,21 @@
                         "type": "number"
                     },
                     "Editora": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "number"
-                            },
-                            "Nome": {
-                                "type": "string"
-                            },
-                            "Cidade": {
-                                "type": "string"
-                            }
-                        }
+                        "$ref": "#/components/schemas/Editora"
+                    }
+                }
+            },
+            "Editora": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Nome": {
+                        "type": "string"
+                    },
+                    "Cidade": {
+                        "type": "string"
                     }
                 }
             }
