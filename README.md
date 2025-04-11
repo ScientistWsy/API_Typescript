@@ -4,11 +4,7 @@
 
 Esta é uma API RESTful simples para gerenciar livros e editoras, construída com **TypeScript**, **Node.js**, e **Express**. O projeto foi pensado para fins educativos e demonstra uma estrutura básica de API moderna, organizada, tipada e documentada com **Swagger**.
 
-## Status ✨
-
-- **Em desenvolvimento...**
-
-## Linguagens e Ferramentas 🚀
+## Linguagens e Ferramentas
 
 - **Typescript**
 - **Express**
@@ -16,6 +12,12 @@ Esta é uma API RESTful simples para gerenciar livros e editoras, construída co
 - **Docker**
 - **PostgreSQL**
 - **Swagger OpenAPI**
+
+
+## API Rotas
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c00a659c-f580-43d1-b114-afc003022dd2" alt="APIRotas">
+</div>
 
 ---
 
